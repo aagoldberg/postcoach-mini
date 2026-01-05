@@ -12,74 +12,60 @@ export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Performance Scoreboard</CardTitle>
+        <CardTitle>Performance</CardTitle>
       </CardHeader>
       <CardContent>
         <StatGrid>
           <Stat
             label="Reply Rate"
             value={`${(metrics.replyRate * 100).toFixed(0)}%`}
-            subValue="of posts got replies"
-            icon={
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-              </svg>
-            }
+            subValue="got replies"
           />
           <Stat
-            label="Repeat Repliers"
+            label="Repeat Fans"
             value={`${(metrics.repeatReplierRate * 100).toFixed(0)}%`}
-            subValue="came back again"
-            icon={
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            }
+            subValue="came back"
           />
           <Stat
-            label="Median Engagement"
+            label="Engagement"
             value={metrics.medianEngagementScore.toFixed(1)}
-            subValue="score per post"
-            icon={
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-            }
+            subValue="median score"
           />
           <Stat
-            label="Total Posts"
+            label="Posts"
             value={metrics.totalCasts}
-            subValue="in last 30 days"
-            icon={
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            }
+            subValue="last 30 days"
           />
         </StatGrid>
 
-        {topTheme && (
-          <div className="mt-6 pt-6 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-zinc-500 dark:text-zinc-400">Top Performing Theme</span>
-              <div className="flex items-center gap-2">
-                <Badge variant="success">{topTheme.label}</Badge>
-                <span className="text-sm text-zinc-600 dark:text-zinc-300">
-                  {topTheme.avgEngagement.toFixed(1)} avg engagement
+        {(topTheme || metrics.topThemes.length > 0) && (
+          <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+            {topTheme && (
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+                  Best Topic
                 </span>
+                <div className="flex items-center gap-2">
+                  <Badge variant="success">{topTheme.label}</Badge>
+                  <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                    {topTheme.avgEngagement.toFixed(1)} avg
+                  </span>
+                </div>
               </div>
-            </div>
-          </div>
-        )}
+            )}
 
-        {metrics.topThemes.length > 0 && (
-          <div className="mt-4">
-            <span className="text-sm text-zinc-500 dark:text-zinc-400">Your Topics</span>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {metrics.topThemes.map((theme, idx) => (
-                <Badge key={idx} variant="default">{theme}</Badge>
-              ))}
-            </div>
+            {metrics.topThemes.length > 0 && (
+              <div>
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+                  Your Topics
+                </span>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {metrics.topThemes.map((theme, idx) => (
+                    <Badge key={idx} variant="default">{theme}</Badge>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </CardContent>
