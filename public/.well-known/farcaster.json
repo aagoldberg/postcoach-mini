@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjAsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIn0",
+    "payload": "eyJkb21haW4iOiJwb3N0Y29hY2gtbWluaS52ZXJjZWwuYXBwIn0",
+    "signature": "PLACEHOLDER_GENERATE_AT_https://miniapps.farcaster.xyz/docs/guides/publishing"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "PostCoach",
+    "iconUrl": "https://postcoach-mini.vercel.app/icon.png",
+    "homeUrl": "https://postcoach-mini.vercel.app",
+    "splashBackgroundColor": "#7c3aed",
+    "subtitle": "AI Farcaster Coach",
+    "description": "Get AI-powered feedback on your Farcaster posts. See what's working, what isn't, and get a personalized weekly brief.",
+    "primaryCategory": "social",
+    "tags": ["analytics", "ai", "growth", "coaching"]
+  }
+}
