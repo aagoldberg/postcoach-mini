@@ -1,10 +1,10 @@
 # PostCoach Mini App
 
-A Farcaster Mini App that gives you AI-powered feedback on your posts. Opens in Warpcast and automatically analyzes your account - no login required.
+A Farcaster Mini App that gives you AI-powered feedback on your posts. Opens in any Farcaster client and automatically analyzes your account - no login required.
 
 ## How It Works
 
-1. User opens the mini app in Warpcast
+1. User opens the mini app in a Farcaster client
 2. SDK provides user context (FID, username, etc.)
 3. App automatically fetches and analyzes the user's casts
 4. Shows personalized feedback and weekly brief
@@ -65,4 +65,4 @@ After deploying, go to https://miniapps.farcaster.xyz/docs/guides/publishing to 
 | Auth | None (public) | Quick Auth JWT |
 | User Input | Username field | Auto from SDK context |
 | Access | Anyone analyzes anyone | Only analyze yourself |
-| Distribution | Direct link | Warpcast discovery |
+| Distribution | Direct link | Farcaster discovery |

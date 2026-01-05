@@ -124,13 +124,13 @@ export default function Home() {
             PostCoach
           </h1>
           <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-            Open this app in Warpcast to get AI-powered feedback on your Farcaster posts.
+            Open this app in a Farcaster client to get AI-powered feedback on your posts.
           </p>
           <a
-            href="https://warpcast.com"
+            href="https://farcaster.xyz"
             className="inline-flex items-center justify-center px-6 py-3 bg-violet-600 text-white font-medium rounded-lg hover:bg-violet-700 transition-colors"
           >
-            Open Warpcast
+            Get Farcaster
           </a>
         </div>
       </div>
