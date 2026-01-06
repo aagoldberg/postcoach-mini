@@ -23,8 +23,8 @@ const splashSvg = `
 const ogImageSvg = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="white"/>
-  <text x="600" y="280" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="140" font-weight="400" fill="#1a1a1a">Tenor</text>
-  <text x="600" y="380" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="#666666">Your AI Influence Trainer</text>
+  <text x="600" y="300" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="180" font-weight="700" fill="#1a1a1a">Tenor</text>
+  <text x="600" y="400" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="48" font-weight="500" fill="#555555">Your AI Influence Trainer</text>
 </svg>
 `;
 
