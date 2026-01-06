@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
-import { Card, CardContent, Button } from '@/components/ui';
+import { useRef, useCallback, useState } from 'react';
+import { sdk } from '@farcaster/miniapp-sdk';
+import { Card, CardContent, Button, Toast } from '@/components/ui';
 import type { WeeklyBrief as WeeklyBriefType } from '@/types';
 
 interface WeeklyBriefProps {
@@ -12,6 +13,11 @@ interface WeeklyBriefProps {
 
 export function WeeklyBrief({ brief, username, onShareImage }: WeeklyBriefProps) {
   const briefRef = useRef<HTMLDivElement>(null);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = useCallback((message: string) => {
+    setToast(message);
+  }, []);
 
   const copyToClipboard = useCallback(() => {
     const text = `My Tune Weekly Brief
@@ -32,9 +38,19 @@ Try this: "${brief.experiment.templateCast}"
 Generated with Tune`;
 
     navigator.clipboard.writeText(text).then(() => {
-      alert('Brief copied to clipboard!');
+      showToast('Brief copied to clipboard!');
     });
-  }, [brief]);
+  }, [brief, showToast]);
+
+  const handlePostTemplate = useCallback(async () => {
+    try {
+      await sdk.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(brief.experiment.templateCast)}`);
+    } catch {
+      // Fallback: copy to clipboard
+      await navigator.clipboard.writeText(brief.experiment.templateCast);
+      showToast('Template copied! Paste it in your next cast.');
+    }
+  }, [brief.experiment.templateCast, showToast]);
 
   return (
     <section>
@@ -63,13 +79,13 @@ Generated with Tune`;
         <Card className="overflow-hidden">
           <div className="bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 p-6 text-white">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-violet-200 text-sm">@{username}</span>
-              <span className="text-violet-200 text-sm">
+              <span className="text-white/80 text-sm">@{username}</span>
+              <span className="text-white/80 text-sm">
                 {new Date(brief.periodStart).toLocaleDateString()} - {new Date(brief.periodEnd).toLocaleDateString()}
               </span>
             </div>
             <h3 className="text-2xl font-bold mb-1">Weekly Brief</h3>
-            <p className="text-violet-200 text-sm">Your path to Farcaster influence</p>
+            <p className="text-white/80 text-sm">Your path to Farcaster influence</p>
           </div>
 
           <CardContent className="p-0">
@@ -151,9 +167,17 @@ Generated with Tune`;
                   </p>
                   <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4 border border-zinc-200 dark:border-zinc-700">
                     <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-2">Try posting:</p>
-                    <p className="text-sm text-zinc-800 dark:text-zinc-200 italic">
+                    <p className="text-sm text-zinc-800 dark:text-zinc-200 italic mb-4">
                       &ldquo;{brief.experiment.templateCast}&rdquo;
                     </p>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={handlePostTemplate}
+                      className="w-full"
+                    >
+                      Post This Now
+                    </Button>
                   </div>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-3">
                     {brief.experiment.rationale}
@@ -170,6 +194,8 @@ Generated with Tune`;
           </div>
         </Card>
       </div>
+
+      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </section>
   );
 }

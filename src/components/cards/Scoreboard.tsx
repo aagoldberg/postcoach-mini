@@ -16,21 +16,23 @@ const metricInfo = {
   posts: "Total posts analyzed from the last 30 days.",
 };
 
-function InfoButton({ info }: { info: string }) {
+function InfoButton({ info, label }: { info: string; label: string }) {
   const [show, setShow] = useState(false);
 
   return (
-    <span className="relative inline-block">
+    <span className="relative inline-flex items-center">
       <button
         onClick={() => setShow(!show)}
-        className="ml-1 w-3.5 h-3.5 rounded-full bg-zinc-200 dark:bg-zinc-700 text-zinc-500 dark:text-zinc-400 text-[9px] font-medium hover:bg-zinc-300 dark:hover:bg-zinc-600"
+        aria-label={`More info about ${label}`}
+        aria-expanded={show}
+        className="ml-1.5 w-5 h-5 rounded-full bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 text-[11px] font-medium hover:bg-zinc-300 dark:hover:bg-zinc-600 flex items-center justify-center"
       >
         ?
       </button>
       {show && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setShow(false)} />
-          <div className="absolute z-20 bottom-6 left-1/2 -translate-x-1/2 w-48 p-2 bg-zinc-800 text-white text-[10px] rounded-lg shadow-lg">
+          <div className="absolute z-20 bottom-7 left-1/2 -translate-x-1/2 w-52 p-3 bg-zinc-800 text-white text-xs rounded-lg shadow-lg">
             {info}
           </div>
         </>
@@ -53,37 +55,37 @@ export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
         <CardTitle>Performance</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-4 gap-2 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           <div>
             <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
               {(metrics.replyRate * 100).toFixed(0)}%
             </div>
-            <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
-              Replies<InfoButton info={metricInfo.replies} />
+            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+              Reply Rate<InfoButton info={metricInfo.replies} label="reply rate" />
             </div>
           </div>
           <div>
             <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
               {(metrics.repeatReplierRate * 100).toFixed(0)}%
             </div>
-            <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
-              Repeat<InfoButton info={metricInfo.repeat} />
+            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+              Repeat Fans<InfoButton info={metricInfo.repeat} label="repeat fans" />
             </div>
           </div>
           <div>
             <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
               {metrics.medianEngagementScore.toFixed(1)}
             </div>
-            <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
-              Engage<InfoButton info={metricInfo.engage} />
+            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+              Engagement<InfoButton info={metricInfo.engage} label="engagement" />
             </div>
           </div>
           <div>
             <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
               {metrics.totalCasts}
             </div>
-            <div className="text-[10px] text-zinc-500 dark:text-zinc-400">
-              Posts<InfoButton info={metricInfo.posts} />
+            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+              Posts<InfoButton info={metricInfo.posts} label="posts" />
             </div>
           </div>
         </div>

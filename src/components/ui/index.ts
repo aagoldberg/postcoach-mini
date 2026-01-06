@@ -4,3 +4,4 @@ export { Input } from './Input';
 export { Progress, LoadingProgress } from './Progress';
 export { Stat, StatGrid } from './Stat';
 export { Badge } from './Badge';
+export { Toast } from './Toast';

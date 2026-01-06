@@ -26,7 +26,7 @@ export function UserHeader({ user }: UserHeaderProps) {
       </div>
       <div className="flex-1 min-w-0">
         <h1 className="text-2xl font-bold truncate">{user.displayName}</h1>
-        <p className="text-violet-200 truncate">@{user.username}</p>
+        <p className="text-white/80 truncate">@{user.username}</p>
         <div className="flex gap-4 mt-2 text-sm">
           <span>
             <strong>{user.followerCount.toLocaleString()}</strong> followers
