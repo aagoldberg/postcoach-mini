@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardHeader, CardContent, CardTitle, Badge } from '@/components/ui';
+import { Card, CardHeader, CardContent, CardTitle, Badge, CircularProgress } from '@/components/ui';
 import type { UserMetrics, ThemeCluster } from '@/types';
 
 interface ScoreboardProps {
@@ -56,35 +56,43 @@ export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div>
-            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-              {(metrics.replyRate * 100).toFixed(0)}%
-            </div>
-            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+          <div className="flex flex-col items-center justify-center">
+            <CircularProgress 
+              value={metrics.replyRate * 100} 
+              color="#8b5cf6" // violet-500
+              size={52} 
+            />
+            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
               Reply Rate<InfoButton info={metricInfo.replies} label="reply rate" />
             </div>
           </div>
-          <div>
-            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-              {(metrics.repeatReplierRate * 100).toFixed(0)}%
-            </div>
-            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+          <div className="flex flex-col items-center justify-center">
+             <CircularProgress 
+              value={metrics.repeatReplierRate * 100} 
+              color="#ec4899" // pink-500
+              size={52} 
+            />
+            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
               Repeat Fans<InfoButton info={metricInfo.repeat} label="repeat fans" />
             </div>
           </div>
-          <div>
-            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-              {metrics.medianEngagementScore.toFixed(1)}
+          <div className="flex flex-col items-center justify-center">
+            <div className="h-[52px] flex items-center justify-center">
+              <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                {metrics.medianEngagementScore.toFixed(1)}
+              </span>
             </div>
-            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
               Engagement<InfoButton info={metricInfo.engage} label="engagement" />
             </div>
           </div>
-          <div>
-            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-              {metrics.totalCasts}
+          <div className="flex flex-col items-center justify-center">
+            <div className="h-[52px] flex items-center justify-center">
+              <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                {metrics.totalCasts}
+              </span>
             </div>
-            <div className="text-xs text-zinc-600 dark:text-zinc-400">
+            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
               Posts<InfoButton info={metricInfo.posts} label="posts" />
             </div>
           </div>

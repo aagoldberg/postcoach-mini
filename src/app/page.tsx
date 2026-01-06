@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { sdk } from '@farcaster/miniapp-sdk';
 import type { AnalysisResult } from '@/types';
 import { AnalysisResults } from '@/components/AnalysisResults';
-import { LoadingProgress } from '@/components/ui';
+import { LoadingProgress, TipsCarousel } from '@/components/ui';
 
 type AppState = 'loading' | 'analyzing' | 'success' | 'error' | 'not-in-miniapp';
 
@@ -163,8 +163,9 @@ export default function Home() {
         <p className="text-zinc-600 dark:text-zinc-400 mb-6">
           Analyzing your Farcaster presence...
         </p>
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md space-y-6">
           <LoadingProgress stage={progress.stage} progress={progress.value} />
+          <TipsCarousel />
         </div>
       </div>
     );

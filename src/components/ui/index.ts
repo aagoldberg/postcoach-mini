@@ -4,4 +4,7 @@ export { Input } from './Input';
 export { Progress, LoadingProgress } from './Progress';
 export { Stat, StatGrid } from './Stat';
 export { Badge } from './Badge';
+export { TipsCarousel } from './TipsCarousel';
+export { EmptyState } from './EmptyState';
+export { CircularProgress } from './CircularProgress';
 export { Toast } from './Toast';
