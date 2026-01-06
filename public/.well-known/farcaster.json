@@ -11,8 +11,8 @@
     "splashImageUrl": "https://postcoach-mini.vercel.app/splash.png",
     "homeUrl": "https://postcoach-mini.vercel.app",
     "splashBackgroundColor": "#7c3aed",
-    "subtitle": "AI Farcaster Coach",
-    "description": "Get AI-powered feedback on your Farcaster posts. See what's working, what isn't, and get a personalized weekly brief.",
+    "subtitle": "AI Influence Coach",
+    "description": "Optimize your reach. Get AI-powered feedback on your Farcaster posts and a personalized weekly brief.",
     "primaryCategory": "social",
     "tags": ["analytics", "ai", "growth", "coaching"]
   }
