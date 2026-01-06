@@ -49,7 +49,7 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <Button variant="outline" size="sm" onClick={onReset}>
-          ← Analyze Another
+          ↻ Refresh
         </Button>
         {result.cached && (
           <span className="text-xs text-zinc-500 dark:text-zinc-400">
