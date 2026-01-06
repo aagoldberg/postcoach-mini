@@ -39,7 +39,14 @@ function InfoButton({ info }: { info: string }) {
   );
 }
 
+const GENERIC_LABELS = ['All Posts', 'Mixed Topics'];
+
 export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
+  const showTopTheme = topTheme && !GENERIC_LABELS.includes(topTheme.label);
+  const filteredThemes = metrics.topThemes.filter(
+    (theme) => theme !== topTheme?.label && !GENERIC_LABELS.includes(theme)
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -81,10 +88,10 @@ export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
           </div>
         </div>
 
-        {(topTheme || metrics.topThemes.length > 0) && (
+        {(showTopTheme || filteredThemes.length > 0) && (
           <div className="mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center gap-2 text-xs">
-            {topTheme && <Badge variant="success">{topTheme.label}</Badge>}
-            {metrics.topThemes.slice(0, 2).map((theme, idx) => (
+            {showTopTheme && <Badge variant="success">{topTheme.label}</Badge>}
+            {filteredThemes.slice(0, 2).map((theme, idx) => (
               <Badge key={idx} variant="default">{theme}</Badge>
             ))}
           </div>
