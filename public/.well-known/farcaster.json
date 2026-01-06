@@ -6,8 +6,9 @@
   },
   "miniapp": {
     "version": "1",
-    "name": "PostCoach",
+    "name": "Tenor",
     "iconUrl": "https://postcoach-mini.vercel.app/icon.png",
+    "splashImageUrl": "https://postcoach-mini.vercel.app/splash.png",
     "homeUrl": "https://postcoach-mini.vercel.app",
     "splashBackgroundColor": "#7c3aed",
     "subtitle": "AI Farcaster Coach",

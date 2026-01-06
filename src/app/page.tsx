@@ -121,7 +121,7 @@ export default function Home() {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
-            PostCoach
+            Tenor
           </h1>
           <p className="text-zinc-600 dark:text-zinc-400 mb-6">
             Open this app in a Farcaster client to get AI-powered feedback on your posts.

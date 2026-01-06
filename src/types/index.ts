@@ -1,4 +1,4 @@
-// Core Types for PostCoach - Farcaster Influence Coach
+// Core Types for Tenor - Farcaster Influence Coach
 
 // ============= Farcaster Data Types =============
 
