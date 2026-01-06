@@ -1,21 +1,19 @@
 const sharp = require('sharp');
 const path = require('path');
 
-// Clean text-based icon (1024x1024)
+// Icon - just "T" (1024x1024)
 const iconSvg = `
 <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
   <rect width="1024" height="1024" fill="white"/>
-  <text x="512" y="480" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="280" font-weight="400" fill="#1a1a1a">Tenor</text>
-  <text x="512" y="600" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="64" fill="#666666">Your AI Influence Trainer</text>
+  <text x="512" y="680" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="600" font-weight="400" fill="#1a1a1a">T</text>
 </svg>
 `;
 
-// Splash (200x200)
+// Splash - just "T" (200x200)
 const splashSvg = `
 <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
   <rect width="200" height="200" fill="white"/>
-  <text x="100" y="95" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="400" fill="#1a1a1a">Tenor</text>
-  <text x="100" y="125" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="13" fill="#666666">Your AI Influence Trainer</text>
+  <text x="100" y="140" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="120" font-weight="400" fill="#1a1a1a">T</text>
 </svg>
 `;
 
