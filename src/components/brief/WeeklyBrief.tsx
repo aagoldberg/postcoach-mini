@@ -38,22 +38,22 @@ Generated with Tenor`;
 
   return (
     <section>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
         <div>
           <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
             Weekly Brief
           </h2>
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            Your personalized action items for this week
+            Your action items for this week
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={copyToClipboard}>
-            Copy Text
+            Copy
           </Button>
           {onShareImage && (
             <Button variant="primary" size="sm" onClick={onShareImage}>
-              Share as Image
+              Share
             </Button>
           )}
         </div>
@@ -93,13 +93,9 @@ Generated with Tenor`;
                   <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
                     {brief.win.description}
                   </p>
-                  <div className="inline-flex items-center gap-2 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">
-                    <span className="text-xs text-green-700 dark:text-green-300">
-                      {brief.win.metric}:
-                    </span>
-                    <span className="text-sm font-semibold text-green-700 dark:text-green-300">
-                      {brief.win.value}
-                    </span>
+                  <div className="inline-flex flex-wrap items-center gap-1 bg-green-50 dark:bg-green-900/20 px-3 py-1.5 rounded-lg text-xs">
+                    <span className="text-green-600 dark:text-green-400">{brief.win.metric}:</span>
+                    <span className="font-semibold text-green-700 dark:text-green-300">{brief.win.value}</span>
                   </div>
                 </div>
               </div>
@@ -125,13 +121,9 @@ Generated with Tenor`;
                   <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
                     {brief.weakness.description}
                   </p>
-                  <div className="inline-flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full">
-                    <span className="text-xs text-amber-700 dark:text-amber-300">
-                      {brief.weakness.metric}:
-                    </span>
-                    <span className="text-sm font-semibold text-amber-700 dark:text-amber-300">
-                      {brief.weakness.value}
-                    </span>
+                  <div className="inline-flex flex-wrap items-center gap-1 bg-amber-50 dark:bg-amber-900/20 px-3 py-1.5 rounded-lg text-xs">
+                    <span className="text-amber-600 dark:text-amber-400">{brief.weakness.metric}:</span>
+                    <span className="font-semibold text-amber-700 dark:text-amber-300">{brief.weakness.value}</span>
                   </div>
                 </div>
               </div>

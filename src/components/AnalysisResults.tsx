@@ -47,13 +47,13 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <Button variant="outline" size="sm" onClick={onReset}>
           ← Analyze Another
         </Button>
         {result.cached && (
           <span className="text-xs text-zinc-500 dark:text-zinc-400">
-            Cached result • Generated {new Date(result.generatedAt).toLocaleString()}
+            Cached • {new Date(result.generatedAt).toLocaleDateString()}
           </span>
         )}
       </div>
