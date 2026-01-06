@@ -21,7 +21,7 @@ const frame = {
     title: "Get My Analysis",
     action: {
       type: "launch_miniapp",
-      name: "Tenor",
+      name: "Tune",
       url: appUrl,
       splashImageUrl: `${appUrl}/splash.png`,
       splashBackgroundColor: "#ffffff"
@@ -30,10 +30,10 @@ const frame = {
 };
 
 export const metadata: Metadata = {
-  title: "Tenor - Optimize your reach",
+  title: "Tune - Optimize your reach",
   description: "Optimize your reach. Get AI-powered feedback on your Farcaster posts and a personalized weekly brief.",
   openGraph: {
-    title: "Tenor",
+    title: "Tune",
     description: "Optimize your reach",
     images: [`${appUrl}/og-image.png`],
   },

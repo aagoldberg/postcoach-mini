@@ -1,4 +1,4 @@
-# Tenor - Farcaster Mini App
+# Tune - Farcaster Mini App
 
 A Farcaster Mini App that gives you AI-powered feedback on your posts. Opens in any Farcaster client and automatically analyzes your account - no login required.
 

@@ -1,10 +1,10 @@
-# Tenor: Technical Architecture
+# Tune: Technical Architecture
 
-A deep dive into how Tenor analyzes your Farcaster presence and generates personalized coaching insights.
+A deep dive into how Tune analyzes your Farcaster presence and generates personalized coaching insights.
 
 ## Overview
 
-Tenor combines engagement analytics, content feature extraction, topic clustering, and LLM-powered insights to help creators understand what makes their content resonate. The system is designed to make every user feel like it "gets them" through aggressive personalization at every layer.
+Tune combines engagement analytics, content feature extraction, topic clustering, and LLM-powered insights to help creators understand what makes their content resonate. The system is designed to make every user feel like it "gets them" through aggressive personalization at every layer.
 
 ## Data Pipeline
 
@@ -335,7 +335,7 @@ As users return over time, the system naturally improves:
 
 ## Summary
 
-Tenor isn't a generic analytics dashboard. It's a personalized coaching system that:
+Tune isn't a generic analytics dashboard. It's a personalized coaching system that:
 
 1. **Measures what matters to YOU** (not global benchmarks)
 2. **Identifies YOUR patterns** (not generic best practices)

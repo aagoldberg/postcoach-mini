@@ -6,7 +6,7 @@
   },
   "miniapp": {
     "version": "1",
-    "name": "Tenor",
+    "name": "Tune",
     "iconUrl": "https://postcoach-mini.vercel.app/icon.png",
     "splashImageUrl": "https://postcoach-mini.vercel.app/splash.png",
     "homeUrl": "https://postcoach-mini.vercel.app",

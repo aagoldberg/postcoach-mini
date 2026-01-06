@@ -1,4 +1,4 @@
-# Tenor: Roadmap & Scaling Strategy
+# Tune: Roadmap & Scaling Strategy
 
 Future improvements, cost analysis, and quality enhancements.
 
@@ -141,7 +141,7 @@ CREATE TABLE user_memories (
 
 ### What to Extract
 
-For Tenor, useful memories include:
+For Tune, useful memories include:
 
 | Category | Examples |
 |----------|----------|
@@ -411,7 +411,7 @@ Gross profit: ~$8,150/month (78% margin)
 
 ## 9. Competitive Moat
 
-### What Makes Tenor Defensible
+### What Makes Tune Defensible
 
 1. **Personalization depth**: Not just your data—your patterns, your voice, your community
 

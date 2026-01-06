@@ -1,4 +1,4 @@
-// Core Types for Tenor - Farcaster Influence Coach
+// Core Types for Tune - Farcaster Influence Coach
 
 // ============= Farcaster Data Types =============
 
