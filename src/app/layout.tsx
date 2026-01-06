@@ -16,7 +16,7 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://postcoach-mini.vercel
 
 const frame = {
   version: "1",
-  imageUrl: `${appUrl}/og-image.png`,
+  imageUrl: `${appUrl}/og-image-v2.png`,
   button: {
     title: "Get My Analysis",
     action: {
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Tune",
     description: "Optimize your reach",
-    images: [`${appUrl}/og-image.png`],
+    images: [`${appUrl}/og-image-v2.png`],
   },
   other: {
     "fc:miniapp": JSON.stringify(frame),

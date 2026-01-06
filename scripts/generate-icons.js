@@ -49,9 +49,9 @@ async function generate() {
   await sharp(Buffer.from(ogImageSvg))
     .resize(1200, 630)
     .png()
-    .toFile(path.join(publicDir, 'og-image.png'));
+    .toFile(path.join(publicDir, 'og-image-v2.png'));
 
-  console.log('Created og-image.png (1200x630)');
+  console.log('Created og-image-v2.png (1200x630)');
 }
 
 generate().catch(console.error);
