@@ -24,16 +24,16 @@ const frame = {
       name: "Tenor",
       url: appUrl,
       splashImageUrl: `${appUrl}/splash.png`,
-      splashBackgroundColor: "#7c3aed"
+      splashBackgroundColor: "#ffffff"
     }
   }
 };
 
 export const metadata: Metadata = {
-  title: "Tenor - AI Influence Coach",
+  title: "Tenor - Your AI Influence Trainer",
   description: "Optimize your reach. Get AI-powered feedback on your Farcaster posts and a personalized weekly brief.",
   openGraph: {
-    title: "Tenor - AI Influence Coach",
+    title: "Tenor - Your AI Influence Trainer",
     description: "Optimize your reach with AI-powered feedback.",
     images: [`${appUrl}/og-image.png`],
   },
