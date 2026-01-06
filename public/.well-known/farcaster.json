@@ -11,8 +11,8 @@
     "splashImageUrl": "https://postcoach-mini.vercel.app/splash.png",
     "homeUrl": "https://postcoach-mini.vercel.app",
     "splashBackgroundColor": "#ffffff",
-    "subtitle": "Optimize your reach",
-    "description": "Optimize your reach. Get AI-powered feedback on your Farcaster posts and a personalized weekly brief.",
+    "subtitle": "AI feedback on your Farcaster posts",
+    "description": "Get AI-powered feedback on your casts. See what's working, what's not, and get a personalized weekly brief.",
     "primaryCategory": "social",
     "tags": ["analytics", "ai", "growth", "coaching"]
   }

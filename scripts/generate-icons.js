@@ -22,7 +22,7 @@ const ogImageSvg = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="#f8f8f8"/>
   <text x="600" y="280" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="180" font-weight="400" fill="#111111">Tune</text>
-  <text x="600" y="370" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="44" font-weight="500" letter-spacing="0.08em" fill="#444444">Optimize your reach</text>
+  <text x="600" y="370" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="500" letter-spacing="0.05em" fill="#444444">AI feedback on your Farcaster posts</text>
 </svg>
 `;
 
