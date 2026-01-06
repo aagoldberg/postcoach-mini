@@ -20,9 +20,9 @@ const splashSvg = `
 // OG Image (1200x630)
 const ogImageSvg = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="630" fill="white"/>
-  <text x="600" y="300" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="180" font-weight="700" fill="#1a1a1a">Tenor</text>
-  <text x="600" y="400" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="48" font-weight="500" fill="#555555">Your AI Influence Trainer</text>
+  <rect width="1200" height="630" fill="#fafafa"/>
+  <text x="600" y="290" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="200" font-weight="400" fill="#1a1a1a">Tenor</text>
+  <text x="600" y="380" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="400" letter-spacing="0.15em" fill="#888888">OPTIMIZE YOUR REACH</text>
 </svg>
 `;
 

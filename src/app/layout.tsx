@@ -30,11 +30,11 @@ const frame = {
 };
 
 export const metadata: Metadata = {
-  title: "Tenor - Your AI Influence Trainer",
+  title: "Tenor - Optimize your reach",
   description: "Optimize your reach. Get AI-powered feedback on your Farcaster posts and a personalized weekly brief.",
   openGraph: {
-    title: "Tenor - Your AI Influence Trainer",
-    description: "Optimize your reach with AI-powered feedback.",
+    title: "Tenor",
+    description: "Optimize your reach",
     images: [`${appUrl}/og-image.png`],
   },
   other: {
