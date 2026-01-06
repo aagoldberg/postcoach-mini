@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "eyJmaWQiOjAsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIn0",
+    "header": "eyJmaWQiOjIxODc3NSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDczRjQ5RTYwMzU4NjlhYzliOTljOTMxQjgxNmJGMkEzMTEzZDUzNWYifQ",
     "payload": "eyJkb21haW4iOiJwb3N0Y29hY2gtbWluaS52ZXJjZWwuYXBwIn0",
-    "signature": "PLACEHOLDER_GENERATE_AT_https://miniapps.farcaster.xyz/docs/guides/publishing"
+    "signature": "p5/uWraECbEs8m/bzPa+3OajI4tau8JJiF1arQQ/ObovdfbfKFGnHj4afUfopY0OlajicMRfIttwmNiIeF1MBRs="
   },
   "miniapp": {
     "version": "1",
