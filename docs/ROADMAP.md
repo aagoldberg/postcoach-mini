@@ -70,7 +70,103 @@ Storage is <1% of total operating cost.
 
 ---
 
-## 2. Expanded Cast Analysis
+## 2. Memory Persistence (ChatGPT-Style)
+
+### How ChatGPT-Style Memory Works
+
+ChatGPT doesn't train a custom model per user. It uses a three-step pattern:
+
+1. **Extract**: Identify memorable facts from conversations (LLM or rule-based)
+2. **Store**: Save facts to a database (key-value or vector)
+3. **Inject**: Prepend relevant memories to each prompt
+
+```
+User message arrives
+        │
+        ▼
+┌───────────────────┐
+│  Retrieve memories │  Query by user ID
+│  from database     │  (optionally semantic search)
+└───────────────────┘
+        │
+        ▼
+┌───────────────────┐
+│  Inject into      │  "User preferences: [memories]"
+│  system prompt    │  prepended to context
+└───────────────────┘
+        │
+        ▼
+┌───────────────────┐
+│  Generate response │  Claude sees full context
+└───────────────────┘
+        │
+        ▼
+┌───────────────────┐
+│  Extract new facts │  Optional: LLM or rules
+│  from this session │
+└───────────────────┘
+        │
+        ▼
+    Store new memories
+```
+
+### Cost Breakdown Per User
+
+| Component | Method | Cost/User/Month |
+|-----------|--------|-----------------|
+| **Storage** | Postgres/Redis | ~$0.001 (negligible) |
+| **Extraction (rule-based)** | Regex/keywords | $0 |
+| **Extraction (LLM)** | Claude Haiku per session | ~$0.02-0.15 |
+| **Injection** | Token overhead | ~$0.01 |
+| **Vector search** | Pinecone/pgvector | ~$0.005 |
+
+### Recommended Approach
+
+**Standard tier: ~$0.03/user/month**
+
+- Rule-based extraction (no extra LLM call)
+- Store 20-50 key facts per user
+- Simple key-value retrieval (no vector search needed)
+- Inject ~500 tokens of context per session
+
+```sql
+CREATE TABLE user_memories (
+  fid INTEGER PRIMARY KEY,
+  facts JSONB,           -- ["prefers technical content", "posts mostly weekends"]
+  preferences JSONB,     -- {"focus_area": "engagement", "tone": "direct"}
+  last_analysis JSONB,   -- summary from most recent session
+  updated_at TIMESTAMP
+);
+```
+
+### What to Extract
+
+For Tenor, useful memories include:
+
+| Category | Examples |
+|----------|----------|
+| **Content preferences** | "User focuses on AI/crypto topics" |
+| **Posting patterns** | "Most active on weekends" |
+| **Strengths** | "High reply rate, strong questions" |
+| **Goals** | "Wants to grow audience 2x" |
+| **Past recommendations** | "Suggested more CTAs last week" |
+| **Outcomes** | "Reply rate improved 15% after CTA focus" |
+
+### Comparison: Snapshots vs Memory
+
+| Approach | Persistent History (§1) | Memory Persistence (§2) |
+|----------|-------------------------|-------------------------|
+| **What's stored** | Full weekly metrics | Curated facts & insights |
+| **Size per user** | ~5KB/week | ~2KB total |
+| **Retrieval** | Time-series queries | Key-value lookup |
+| **Use case** | "Your engagement is up 23% vs last month" | "Since you want to grow your AI audience..." |
+| **Cost** | ~$0.001/user/month | ~$0.03/user/month |
+
+**Recommendation:** Implement both. Snapshots for metrics, memory for personalization.
+
+---
+
+## 3. Expanded Cast Analysis
 
 ### Current: 100 Casts
 
@@ -110,7 +206,7 @@ Marginal cost increase for significantly richer analysis.
 
 ---
 
-## 3. Full-Context Claude Analysis
+## 4. Full-Context Claude Analysis
 
 ### Current Approach
 
@@ -159,7 +255,7 @@ Usage: 10% of capacity
 
 ---
 
-## 4. Infrastructure: Self-Hosted Hub
+## 5. Infrastructure: Self-Hosted Hub
 
 ### When to Consider
 
@@ -210,7 +306,7 @@ Maintenance: Ongoing updates, monitoring
 
 ---
 
-## 5. Pricing Model
+## 6. Pricing Model
 
 ### Cost Structure Per Analysis
 
@@ -248,7 +344,7 @@ Gross profit: ~$8,150/month (78% margin)
 
 ---
 
-## 6. Quality Improvement Roadmap
+## 7. Quality Improvement Roadmap
 
 ### Phase 1: Foundation (Now)
 - [x] Basic metrics and clustering
@@ -256,7 +352,8 @@ Gross profit: ~$8,150/month (78% margin)
 - [x] Weekly brief generation
 
 ### Phase 2: Persistence (1-2 weeks)
-- [ ] User history storage
+- [ ] User history storage (weekly snapshots)
+- [ ] Memory persistence (ChatGPT-style facts)
 - [ ] Trend tracking ("up 23% vs last month")
 - [ ] Recommendation tracking
 - [ ] Returning user experience
@@ -283,7 +380,7 @@ Gross profit: ~$8,150/month (78% margin)
 
 ---
 
-## 7. Technical Optimizations
+## 8. Technical Optimizations
 
 ### Quick Wins
 
@@ -312,7 +409,7 @@ Gross profit: ~$8,150/month (78% margin)
 
 ---
 
-## 8. Competitive Moat
+## 9. Competitive Moat
 
 ### What Makes Tenor Defensible
 
@@ -346,6 +443,7 @@ Gross profit: ~$8,150/month (78% margin)
 | Investment | Cost | Impact | Priority |
 |------------|------|--------|----------|
 | Persistent history | 2 days | High | **P0** |
+| Memory persistence | 1 day | High | **P0** |
 | Full-context Claude | 1 day | High | **P0** |
 | Expanded cast limits | 1 day | Medium | **P1** |
 | Parallel fetching | 2 hours | Medium | **P1** |
@@ -353,8 +451,9 @@ Gross profit: ~$8,150/month (78% margin)
 
 **Next steps:**
 1. Add persistent user history (biggest unlock for "it gets me")
-2. Enable full-context Claude for paid tiers
-3. Implement tiered cast limits
-4. Optimize latency with parallel fetching
+2. Add memory persistence (~$0.03/user/mo for personalized context)
+3. Enable full-context Claude for paid tiers
+4. Implement tiered cast limits
+5. Optimize latency with parallel fetching
 
 The path from "useful tool" to "indispensable coach" is depth of personalization over time.
