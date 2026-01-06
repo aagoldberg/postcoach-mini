@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useCallback, useState } from 'react';
-import { sdk } from '@farcaster/miniapp-sdk';
 import { Card, CardContent, Button, Toast } from '@/components/ui';
 import type { WeeklyBrief as WeeklyBriefType } from '@/types';
 
@@ -15,11 +14,9 @@ export function WeeklyBrief({ brief, username, onShareImage }: WeeklyBriefProps)
   const briefRef = useRef<HTMLDivElement>(null);
   const [toast, setToast] = useState<string | null>(null);
 
-  const showToast = useCallback((message: string) => {
-    setToast(message);
-  }, []);
-
   const copyToClipboard = useCallback(() => {
+    const formatText = brief.experiment.templateCast || '';
+    
     const text = `My Tune Weekly Brief
 
 WIN: ${brief.win.title}
@@ -33,163 +30,159 @@ ${brief.weakness.metric}: ${brief.weakness.value}
 EXPERIMENT: ${brief.experiment.title}
 ${brief.experiment.description}
 
-Try this: "${brief.experiment.templateCast}"
+Format: ${formatText}
+Why: ${brief.experiment.rationale}
 
 Generated with Tune`;
 
     navigator.clipboard.writeText(text).then(() => {
-      showToast('Brief copied to clipboard!');
+      setToast('Brief copied to clipboard!');
     });
-  }, [brief, showToast]);
-
-  const handlePostTemplate = useCallback(async () => {
-    try {
-      await sdk.actions.openUrl(`https://warpcast.com/~/compose?text=${encodeURIComponent(brief.experiment.templateCast)}`);
-    } catch {
-      // Fallback: copy to clipboard
-      await navigator.clipboard.writeText(brief.experiment.templateCast);
-      showToast('Template copied! Paste it in your next cast.');
-    }
-  }, [brief.experiment.templateCast, showToast]);
+  }, [brief]);
 
   return (
     <section>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
-            Weekly Brief
+            Your Brief
           </h2>
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            Your action items for this week
+            Based on your last 30 days
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={copyToClipboard}>
-            Copy
+            Copy Text
           </Button>
           {onShareImage && (
             <Button variant="primary" size="sm" onClick={onShareImage}>
-              Share
+              Share as Image
             </Button>
           )}
         </div>
       </div>
 
       <div ref={briefRef} id="weekly-brief-card">
-        <Card className="overflow-hidden">
-          <div className="bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 p-6 text-white">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-white/80 text-sm">@{username}</span>
-              <span className="text-white/80 text-sm">
-                {new Date(brief.periodStart).toLocaleDateString()} - {new Date(brief.periodEnd).toLocaleDateString()}
+        <Card className="overflow-hidden shadow-[0_40px_80px_-15px_rgba(0,0,0,0.08)]">
+          <div className="p-8 pb-4 border-b border-stone-50">
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-stone-400 font-bold text-[10px] uppercase tracking-[0.3em]">@{username}</span>
+              <span className="text-stone-400 font-bold text-[10px] uppercase tracking-[0.3em]">
+                {new Date(brief.periodStart).toLocaleDateString()} — {new Date(brief.periodEnd).toLocaleDateString()}
               </span>
             </div>
-            <h3 className="text-2xl font-bold mb-1">Weekly Brief</h3>
-            <p className="text-white/80 text-sm">Your path to Farcaster influence</p>
+            <h3 className="text-4xl font-black text-[#1a1f2e] tracking-tighter serif-heading mb-1">The Brief</h3>
+            <p className="text-stone-400 text-[10px] font-bold uppercase tracking-[0.2em]">Based on your last 30 days of activity</p>
           </div>
 
-          <CardContent className="p-0">
+          <CardContent className="p-0 bg-white">
             {/* Win Section */}
-            <div className="p-6 border-b border-zinc-200 dark:border-zinc-800">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="p-8 border-b border-stone-50">
+              <div className="flex items-start gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-stone-50 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wider">
-                      Win
+                    <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-[0.25em]">
+                      The Performance Win
                     </span>
                   </div>
-                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
+                  <h4 className="text-xl font-black text-[#1a1f2e] tracking-tight mb-2">
                     {brief.win.title}
                   </h4>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
+                  <p className="text-base text-stone-500 mb-4 leading-relaxed font-medium">
                     {brief.win.description}
                   </p>
-                  <div className="inline-flex flex-wrap items-center gap-1 bg-green-50 dark:bg-green-900/20 px-3 py-1.5 rounded-lg text-xs">
-                    <span className="text-green-600 dark:text-green-400">{brief.win.metric}:</span>
-                    <span className="font-semibold text-green-700 dark:text-green-300">{brief.win.value}</span>
+                  <div className="inline-flex items-center gap-3 bg-stone-50 px-4 py-2 rounded-xl">
+                    <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                      {brief.win.metric}:
+                    </span>
+                    <span className="text-base font-black text-emerald-600 tracking-tighter">
+                      {brief.win.value}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Weakness Section */}
-            <div className="p-6 border-b border-zinc-200 dark:border-zinc-800">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="p-8 border-b border-stone-50">
+              <div className="flex items-start gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-stone-50 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wider">
-                      Weakness
+                    <span className="text-[10px] font-bold text-rose-600 uppercase tracking-[0.25em]">
+                      The Opportunity
                     </span>
                   </div>
-                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
+                  <h4 className="text-xl font-black text-[#1a1f2e] tracking-tight mb-2">
                     {brief.weakness.title}
                   </h4>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
+                  <p className="text-base text-stone-500 mb-4 leading-relaxed font-medium">
                     {brief.weakness.description}
                   </p>
-                  <div className="inline-flex flex-wrap items-center gap-1 bg-amber-50 dark:bg-amber-900/20 px-3 py-1.5 rounded-lg text-xs">
-                    <span className="text-amber-600 dark:text-amber-400">{brief.weakness.metric}:</span>
-                    <span className="font-semibold text-amber-700 dark:text-amber-300">{brief.weakness.value}</span>
+                  <div className="inline-flex items-center gap-3 bg-stone-50 px-4 py-2 rounded-xl">
+                    <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                      {brief.weakness.metric}:
+                    </span>
+                    <span className="text-base font-black text-rose-600 tracking-tighter">
+                      {brief.weakness.value}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Experiment Section */}
-            <div className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            <div className="p-8">
+              <div className="flex items-start gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-[#1a1f2e] flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                   </svg>
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-medium text-violet-600 dark:text-violet-400 uppercase tracking-wider">
-                      Experiment
+                    <span className="text-[10px] font-bold text-[#1a1f2e] uppercase tracking-[0.25em]">
+                      The Experiment
                     </span>
                   </div>
-                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
+                  <h4 className="text-xl font-black text-[#1a1f2e] tracking-tight mb-2">
                     {brief.experiment.title}
                   </h4>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">
+                  <p className="text-base text-stone-500 mb-6 leading-relaxed font-medium">
                     {brief.experiment.description}
                   </p>
-                  <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4 border border-zinc-200 dark:border-zinc-700">
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-2">Try posting:</p>
-                    <p className="text-sm text-zinc-800 dark:text-zinc-200 italic mb-4">
+                  <div className="bg-stone-50 rounded-2xl p-8 relative group border border-stone-100">
+                    <p className="text-[10px] text-stone-400 mb-4 font-bold uppercase tracking-[0.25em]">The format:</p>
+                    <p className="text-2xl text-slate-900 serif-heading leading-tight italic">
                       &ldquo;{brief.experiment.templateCast}&rdquo;
                     </p>
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={handlePostTemplate}
-                      className="w-full"
-                    >
-                      Post This Now
-                    </Button>
                   </div>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-3">
-                    {brief.experiment.rationale}
-                  </p>
+                  
+                  <div className="mt-6 flex items-center gap-3 text-[10px] text-stone-400 font-bold uppercase tracking-[0.3em]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-stone-200"></span>
+                    <span>Rationale: {brief.experiment.rationale}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </CardContent>
 
-          <div className="bg-zinc-50 dark:bg-zinc-800/50 px-6 py-3 text-center">
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
-              Generated by Tune • {new Date(brief.generatedAt).toLocaleDateString()}
+          <div className="bg-white px-8 py-6 border-t border-stone-50 flex justify-between items-center">
+            <p className="text-[10px] text-stone-300 font-bold uppercase tracking-[0.4em]">
+              TUNE INTELLIGENCE REPORT
+            </p>
+            <p className="text-[10px] text-stone-300 font-bold uppercase tracking-widest">
+              REV {new Date().toLocaleDateString('en-US', { month: '2-digit', year: 'numeric' }).replace('/', '-')}
             </p>
           </div>
         </Card>

@@ -1,28 +1,44 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f2f5f3; /* Soft Sage / Grey-Green */
+  --foreground: #1a1f2e; /* Deep Ink */
+  
+  --brand-primary: #1a1f2e; /* Ink */
+  --brand-secondary: #4b5e54; /* Muted Forest */
+  --brand-accent: #d4b483; /* Muted Gold */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  @apply antialiased selection:bg-stone-200;
+}
+
+@layer utilities {
+  .premium-card {
+    @apply bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.06)] transition-all duration-700 rounded-[2.5rem];
+  }
+  
+  .serif-heading {
+    @apply font-serif italic tracking-tight;
+  }
+
+  .ink-border {
+    @apply border-stone-100;
+  }
 }
 
 /* Hide scrollbar but keep functionality */

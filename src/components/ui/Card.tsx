@@ -5,11 +5,12 @@ import { ReactNode } from 'react';
 interface CardProps {
   children: ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
-export function Card({ children, className = '' }: CardProps) {
+export function Card({ children, className = '', onClick }: CardProps) {
   return (
-    <div className={`bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm ${className}`}>
+    <div className={`premium-card ${className}`} onClick={onClick}>
       {children}
     </div>
   );
@@ -17,19 +18,19 @@ export function Card({ children, className = '' }: CardProps) {
 
 export function CardHeader({ children, className = '' }: CardProps) {
   return (
-    <div className={`px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 ${className}`}>
+    <div className={`px-8 py-6 border-b border-stone-50 ${className}`}>
       {children}
     </div>
   );
 }
 
 export function CardContent({ children, className = '' }: CardProps) {
-  return <div className={`px-4 py-3 ${className}`}>{children}</div>;
+  return <div className={`px-8 py-6 ${className}`}>{children}</div>;
 }
 
 export function CardTitle({ children, className = '' }: CardProps) {
   return (
-    <h3 className={`text-base font-semibold text-zinc-900 dark:text-zinc-100 ${className}`}>
+    <h3 className={`text-2xl font-black text-[#1a1f2e] tracking-tight ${className}`}>
       {children}
     </h3>
   );

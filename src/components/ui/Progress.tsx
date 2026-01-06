@@ -20,20 +20,20 @@ export function Progress({
       {(label || showPercentage) && (
         <div className="flex justify-between mb-2">
           {label && (
-            <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
               {label}
             </span>
           )}
           {showPercentage && (
-            <span className="text-sm text-zinc-500 dark:text-zinc-400">
+            <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
               {Math.round(percentage)}%
             </span>
           )}
         </div>
       )}
-      <div className="w-full h-2 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden">
+      <div className="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-violet-500 to-purple-600 rounded-full transition-all duration-500 ease-out"
+          className="h-full bg-[#1a1f2e] rounded-full transition-all duration-500 ease-out"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -45,7 +45,7 @@ export function LoadingProgress({ stage, progress }: { stage: string; progress: 
   return (
     <div className="w-full max-w-md mx-auto">
       <Progress value={progress} showPercentage />
-      <p className="text-center text-sm text-zinc-600 dark:text-zinc-400 mt-3 animate-pulse">
+      <p className="text-center text-xs font-bold text-stone-500 uppercase tracking-widest mt-4 animate-pulse">
         {stage}
       </p>
     </div>

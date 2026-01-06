@@ -113,22 +113,22 @@ export default function Home() {
   // Not in mini app - show instructions
   if (state === 'not-in-miniapp') {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-violet-600 dark:text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-[#1a1f2e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+          <h1 className="text-2xl font-black text-[#1a1f2e] mb-4 tracking-tight serif-heading italic">
             Tune
           </h1>
-          <p className="text-zinc-600 dark:text-zinc-400 mb-6">
+          <p className="text-stone-500 mb-6 font-medium">
             Open this app in a Farcaster client to get AI-powered feedback on your posts.
           </p>
           <a
             href="https://farcaster.xyz"
-            className="inline-flex items-center justify-center px-6 py-3 bg-violet-600 text-white font-medium rounded-lg hover:bg-violet-700 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 bg-[#1a1f2e] text-white font-bold uppercase tracking-widest text-xs rounded-lg hover:bg-[#2d364d] transition-colors shadow-lg shadow-indigo-500/20"
           >
             Get Farcaster
           </a>
@@ -140,8 +140,8 @@ export default function Home() {
   // Loading SDK
   if (state === 'loading') {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
-        <div className="animate-pulse text-zinc-500">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-stone-400 font-bold uppercase tracking-widest text-xs">Loading...</div>
       </div>
     );
   }
@@ -149,18 +149,18 @@ export default function Home() {
   // Analyzing
   if (state === 'analyzing') {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <div className="mb-8">
-          <div className="w-16 h-16 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center animate-pulse">
-            <svg className="w-8 h-8 text-violet-600 dark:text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center animate-pulse">
+            <svg className="w-8 h-8 text-[#1a1f2e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
         </div>
-        <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
+        <h2 className="text-xl font-black text-[#1a1f2e] mb-2 serif-heading italic">
           Hey {user?.displayName || user?.username || 'there'}!
         </h2>
-        <p className="text-zinc-600 dark:text-zinc-400 mb-6">
+        <p className="text-stone-500 mb-6 font-medium">
           Analyzing your Farcaster presence...
         </p>
         <div className="w-full max-w-md space-y-6">
@@ -174,23 +174,23 @@ export default function Home() {
   // Error
   if (state === 'error') {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <div className="mb-8">
-          <div className="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-            <svg className="w-8 h-8 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="w-16 h-16 rounded-full bg-rose-50 flex items-center justify-center">
+            <svg className="w-8 h-8 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
         </div>
-        <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
+        <h2 className="text-xl font-black text-[#1a1f2e] mb-2 serif-heading italic">
           Something went wrong
         </h2>
-        <p className="text-zinc-600 dark:text-zinc-400 mb-6 text-center max-w-md">
+        <p className="text-stone-500 mb-6 text-center max-w-md font-medium">
           {error}
         </p>
         <button
           onClick={handleRetry}
-          className="px-6 py-3 bg-violet-600 text-white font-medium rounded-lg hover:bg-violet-700 transition-colors"
+          className="px-6 py-3 bg-[#1a1f2e] text-white font-bold uppercase tracking-widest text-xs rounded-lg hover:bg-[#2d364d] transition-colors"
         >
           Try Again
         </button>
@@ -201,8 +201,8 @@ export default function Home() {
   // Success - show results
   if (state === 'success' && result) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-        <main className="container mx-auto px-4 py-6 max-w-4xl">
+      <div className="min-h-screen">
+        <main className="container mx-auto px-4 py-6 max-w-5xl">
           <AnalysisResults result={result} onReset={handleRetry} />
         </main>
       </div>

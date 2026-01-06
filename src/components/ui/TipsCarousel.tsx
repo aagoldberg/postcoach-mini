@@ -25,7 +25,7 @@ export function TipsCarousel() {
   }, []);
 
   return (
-    <div className="h-12 relative flex items-center justify-center overflow-hidden">
+    <div className="h-16 relative flex items-center justify-center overflow-hidden mt-4">
       <AnimatePresence mode="wait">
         <motion.p
           key={index}
@@ -33,7 +33,7 @@ export function TipsCarousel() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.5 }}
-          className="text-sm text-zinc-500 dark:text-zinc-400 text-center italic absolute w-full px-4"
+          className="text-lg text-[#1a1f2e] text-center italic font-medium serif-heading absolute w-full px-4 leading-snug"
         >
           &ldquo;{TIPS[index]}&rdquo;
         </motion.p>

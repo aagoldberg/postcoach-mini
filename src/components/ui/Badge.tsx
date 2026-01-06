@@ -4,25 +4,26 @@ interface BadgeProps {
   children: React.ReactNode;
   variant?: 'default' | 'success' | 'warning' | 'error' | 'info';
   size?: 'sm' | 'md';
+  className?: string;
 }
 
-export function Badge({ children, variant = 'default', size = 'sm' }: BadgeProps) {
+export function Badge({ children, variant = 'default', size = 'sm', className = '' }: BadgeProps) {
   const variants = {
-    default: 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200',
-    success: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-    warning: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400',
-    error: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-    info: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+    default: 'bg-stone-50 text-stone-400 border border-stone-100',
+    success: 'bg-emerald-50/50 text-emerald-700 border border-emerald-100',
+    warning: 'bg-amber-50/50 text-amber-700 border border-amber-100',
+    error: 'bg-rose-50/50 text-rose-700 border border-rose-100',
+    info: 'bg-[#4b5e54]/10 text-[#4b5e54] border border-[#4b5e54]/20',
   };
 
   const sizes = {
-    sm: 'px-2 py-0.5 text-xs',
-    md: 'px-2.5 py-1 text-sm',
+    sm: 'px-3 py-1 text-[10px] font-bold uppercase tracking-wider',
+    md: 'px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider',
   };
 
   return (
     <span
-      className={`inline-flex items-center font-medium rounded-full ${variants[variant]} ${sizes[size]}`}
+      className={`inline-flex items-center font-medium rounded-full ${variants[variant]} ${sizes[size]} ${className}`}
     >
       {children}
     </span>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardHeader, CardContent, CardTitle, Badge, CircularProgress } from '@/components/ui';
+import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui';
 import type { UserMetrics, ThemeCluster } from '@/types';
 
 interface ScoreboardProps {
@@ -9,103 +9,114 @@ interface ScoreboardProps {
   topTheme: ThemeCluster | null;
 }
 
-const metricInfo = {
-  replies: "% of your posts that got at least one reply. Higher means your content sparks conversation.",
-  repeat: "% of repliers who've engaged with you multiple times. Higher means you're building real fans.",
-  engage: "Median engagement score across posts. Measures overall interaction quality.",
-  posts: "Total posts analyzed from the last 30 days.",
-};
-
-function InfoButton({ info, label }: { info: string; label: string }) {
+function InfoTip({ text }: { text: string }) {
   const [show, setShow] = useState(false);
 
   return (
-    <span className="relative inline-flex items-center">
+    <div className="relative inline-block ml-1.5">
       <button
         onClick={() => setShow(!show)}
-        aria-label={`More info about ${label}`}
-        aria-expanded={show}
-        className="ml-1.5 w-5 h-5 rounded-full bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 text-[11px] font-medium hover:bg-zinc-300 dark:hover:bg-zinc-600 flex items-center justify-center"
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        className="w-4 h-4 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-400 hover:text-stone-500 text-[10px] font-bold transition-colors flex items-center justify-center"
       >
         ?
       </button>
       {show && (
-        <>
-          <div className="fixed inset-0 z-10" onClick={() => setShow(false)} />
-          <div className="absolute z-20 bottom-7 left-1/2 -translate-x-1/2 w-52 p-3 bg-zinc-800 text-white text-xs rounded-lg shadow-lg">
-            {info}
-          </div>
-        </>
+        <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 bg-[#1a1f2e] text-white text-xs rounded-xl shadow-xl animate-in fade-in zoom-in-95 duration-200">
+          <p className="leading-relaxed">{text}</p>
+          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-[#1a1f2e]" />
+        </div>
       )}
-    </span>
+    </div>
   );
 }
 
-const GENERIC_LABELS = ['All Posts', 'Mixed Topics'];
-
 export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
-  const showTopTheme = topTheme && !GENERIC_LABELS.includes(topTheme.label);
-  const filteredThemes = metrics.topThemes.filter(
-    (theme) => theme !== topTheme?.label && !GENERIC_LABELS.includes(theme)
-  );
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Performance</CardTitle>
+    <Card className="h-full border-none shadow-[0_20px_40px_-12px_rgba(0,0,0,0.06)] bg-white overflow-hidden">
+      <CardHeader className="pb-0 border-none px-8 pt-8">
+        <CardTitle className="text-2xl serif-heading italic">Performance</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div className="flex flex-col items-center justify-center">
-            <CircularProgress 
-              value={metrics.replyRate * 100} 
-              color="#8b5cf6" // violet-500
-              size={52} 
-            />
-            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
-              Reply Rate<InfoButton info={metricInfo.replies} label="reply rate" />
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-             <CircularProgress 
-              value={metrics.repeatReplierRate * 100} 
-              color="#ec4899" // pink-500
-              size={52} 
-            />
-            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
-              Repeat Fans<InfoButton info={metricInfo.repeat} label="repeat fans" />
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <div className="h-[52px] flex items-center justify-center">
-              <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-                {metrics.medianEngagementScore.toFixed(1)}
+      <CardContent className="p-8 pt-6 space-y-6">
+        
+        {/* Key Metrics List */}
+        <div className="space-y-6">
+          <div className="flex justify-between items-baseline pb-4 border-b border-stone-100">
+            <span className="text-stone-400 font-medium text-sm flex items-center">
+              Reply rate
+              <InfoTip text="Percentage of your posts that received at least one reply. Higher = your content sparks conversation." />
+            </span>
+            <div className="text-right">
+              <span className="block text-3xl font-black text-[#1a1f2e] tracking-tighter">
+                {(metrics.replyRate * 100).toFixed(0)}%
               </span>
-            </div>
-            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
-              Engagement<InfoButton info={metricInfo.engage} label="engagement" />
+              <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">of posts</span>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center">
-            <div className="h-[52px] flex items-center justify-center">
-              <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-                {metrics.totalCasts}
+
+          {metrics.reciprocityRate !== null && (
+            <div className="flex justify-between items-baseline pb-4 border-b border-stone-100">
+              <span className="text-stone-400 font-medium text-sm flex items-center">
+                Reciprocity
+                <InfoTip text="Of people you've replied to, what % replied back to you? Measures two-way relationships, not just broadcast reach." />
               </span>
+              <div className="text-right">
+                <span className="block text-3xl font-black text-[#1a1f2e] tracking-tighter">
+                  {(metrics.reciprocityRate * 100).toFixed(0)}%
+                </span>
+                <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">mutual convos</span>
+              </div>
             </div>
-            <div className="text-xs text-zinc-600 dark:text-zinc-400 mt-2">
-              Posts<InfoButton info={metricInfo.posts} label="posts" />
+          )}
+
+          <div className="flex justify-between items-baseline pb-4 border-b border-stone-100">
+            <span className="text-stone-400 font-medium text-sm flex items-center">
+              Return rate
+              <InfoTip text="What % of your repliers come back to reply again? High = you're building a loyal community, not just one-time visitors." />
+            </span>
+            <div className="text-right">
+              <span className="block text-3xl font-black text-[#1a1f2e] tracking-tighter">
+                {(metrics.repeatReplierRate * 100).toFixed(0)}%
+              </span>
+              <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">loyalty</span>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-baseline pb-4 border-b border-stone-100">
+            <span className="text-stone-400 font-medium text-sm flex items-center">
+              Avg Score
+              <InfoTip text="Median engagement per post. Calculated as: replies×3 + recasts×2 + likes×1. Replies weighted highest because they signal real interest." />
+            </span>
+            <div className="text-right">
+              <span className="block text-3xl font-black text-[#1a1f2e] tracking-tighter">
+                {metrics.medianEngagementScore.toFixed(0)}
+              </span>
+              <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">per cast</span>
             </div>
           </div>
         </div>
 
-        {(showTopTheme || filteredThemes.length > 0) && (
-          <div className="mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center gap-2 text-xs">
-            {showTopTheme && <Badge variant="success">{topTheme.label}</Badge>}
-            {filteredThemes.slice(0, 2).map((theme, idx) => (
-              <Badge key={idx} variant="default">{theme}</Badge>
-            ))}
+        {/* Top Topic - Simplified */}
+        {topTheme && (
+          <div className="pt-4">
+            <span className="text-[10px] font-bold text-stone-300 uppercase tracking-[0.2em] block mb-4">
+              Best Performing Topic
+            </span>
+            <div className="bg-stone-50 rounded-2xl p-6 flex flex-col gap-3">
+              <p className="text-lg font-bold text-[#1a1f2e] leading-snug">
+                {topTheme.label}
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
+                  {topTheme.avgEngagement.toFixed(0)} Avg Score
+                </span>
+              </div>
+            </div>
           </div>
         )}
+
       </CardContent>
     </Card>
   );

@@ -1,160 +1,134 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Card, Badge } from '@/components/ui';
+import { Card, CardContent, Badge } from '@/components/ui';
 import type { CastAnalysis } from '@/types';
 
 interface FeedbackCardProps {
   analysis: CastAnalysis;
   type: 'top' | 'bottom';
-  defaultExpanded?: boolean;
 }
 
-export function FeedbackCard({ analysis, type, defaultExpanded = false }: FeedbackCardProps) {
+export function FeedbackCard({ analysis, type }: FeedbackCardProps) {
   const { cast, metrics, content, feedback, theme } = analysis;
+  const [isExpanded, setIsExpanded] = useState(false);
   const isTop = type === 'top';
-  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
-
-  // Get 2-3 most relevant badges
-  const relevantBadges = [
-    content.hasQuestion && 'Question',
-    content.hasCTA && 'CTA',
-    theme,
-  ].filter(Boolean).slice(0, 2);
 
   return (
-    <Card className={`overflow-hidden ${isTop ? 'border-l-4 border-l-green-500' : 'border-l-4 border-l-amber-500'}`}>
-      {/* Collapsed Header - Always visible, clickable */}
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-4 text-left hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
-      >
-        <div className="flex items-start justify-between gap-3">
-          <p className="text-zinc-800 dark:text-zinc-200 text-sm leading-relaxed line-clamp-2 flex-1">
-            {cast.text}
-          </p>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <span className={`text-xs font-semibold ${isTop ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>
-              {metrics.engagementScore} pts
-            </span>
-            <svg
-              className={`w-5 h-5 text-zinc-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+    <Card 
+      className={`overflow-hidden bg-white border-none shadow-[0_10px_30px_-10px_rgba(0,0,0,0.03)] transition-all duration-500 ${isExpanded ? 'shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] scale-[1.01]' : 'hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] cursor-pointer'}`}
+      onClick={() => !isExpanded && setIsExpanded(true)}
+    >
+      <CardContent className="p-8">
+        {/* Header: Signal & Meta (Always Visible) */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className={`w-2.5 h-2.5 rounded-full ${isTop ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]' : 'bg-rose-500'}`} />
+            <span className="text-[10px] font-bold text-stone-300 uppercase tracking-[0.3em]">{isTop ? 'High Signal' : 'Low Signal'}</span>
           </div>
+          {theme && <Badge variant="default" className="bg-stone-50 border-stone-100 text-stone-400">{theme}</Badge>}
         </div>
 
-              {/* Mini badges in collapsed view */}
-              <AnimatePresence>
-                {!isExpanded && relevantBadges.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="flex gap-1.5 mt-2 px-4 pb-2"
-                  >
-                    {relevantBadges.map((badge, idx) => (
-                      <span key={idx} className="text-[10px] px-1.5 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded">
-                        {badge}
-                      </span>
-                    ))}
-                  </motion.div>
-                        )}
-                      </AnimatePresence>
-                      </button>
-                
-                      {/* Expanded Content */}              <AnimatePresence>
-                {isExpanded && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                  >
-                    <div className="px-4 pb-4 space-y-4 border-t border-zinc-100 dark:border-zinc-800">
-                      {/* Metrics Row */}
-                      <div className="flex flex-wrap gap-3 pt-4 text-xs">
-                        <span className="text-zinc-500 dark:text-zinc-400">
-                          <strong className="text-zinc-700 dark:text-zinc-300">{metrics.likesCount}</strong> likes
-                        </span>
-                        <span className="text-zinc-500 dark:text-zinc-400">
-                          <strong className="text-zinc-700 dark:text-zinc-300">{metrics.repliesCount}</strong> replies
-                        </span>
-                        <span className="text-zinc-500 dark:text-zinc-400">
-                          <strong className="text-zinc-700 dark:text-zinc-300">{metrics.recastsCount}</strong> recasts
-                        </span>
-                      </div>
-        
-                      {/* Content Features */}
-                      <div className="flex flex-wrap gap-2">
-                        {content.hasQuestion && <Badge variant="info">Question</Badge>}
-                        {content.hasCTA && <Badge variant="info">CTA</Badge>}
-                        {content.hasMedia && <Badge variant="default">Media</Badge>}
-                        {theme && <Badge variant="default">{theme}</Badge>}
-                        <Badge variant={content.sentiment === 'positive' ? 'success' : content.sentiment === 'negative' ? 'error' : 'default'}>
-                          {content.sentiment}
-                        </Badge>
-                      </div>
-        
-                      {/* Feedback */}
-                      {feedback && (
-                        <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-lg p-3 space-y-3">
-                          <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                            {feedback.summary}
-                          </p>
-        
-                          {isTop ? (
-                            <div>
-                              <p className="text-xs font-medium text-green-600 dark:text-green-400 mb-1">
-                                What to replicate:
-                              </p>
-                              <ul className="text-xs text-zinc-600 dark:text-zinc-400 space-y-1">
-                                {feedback.whatToReplicate.map((item, idx) => (
-                                  <li key={idx} className="flex items-start gap-1">
-                                    <span className="text-green-500 mt-0.5">+</span>
-                                    <span>{item}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ) : (
-                            <div>
-                              <p className="text-xs font-medium text-amber-600 dark:text-amber-400 mb-1">
-                                What to avoid:
-                              </p>
-                              <ul className="text-xs text-zinc-600 dark:text-zinc-400 space-y-1">
-                                {feedback.whatToAvoid.map((item, idx) => (
-                                  <li key={idx} className="flex items-start gap-1">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>{item}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-        
-                          {feedback.likelyCauses.length > 0 && (
-                            <div>
-                              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-1">
-                                Likely causes:
-                              </p>
-                              <ul className="text-xs text-zinc-500 dark:text-zinc-500 space-y-0.5">
-                                {feedback.likelyCauses.map((cause, idx) => (
-                                  <li key={idx}>• {cause}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      )}
+        {/* Content Preview (Always Visible) */}
+        <div className="mb-8">
+          <p className="text-stone-400 text-xs font-medium uppercase tracking-widest mb-3">Context</p>
+          <p className="text-stone-500 text-sm leading-relaxed line-clamp-2 font-medium italic border-l-2 border-stone-100 pl-4">
+            &ldquo;{cast.text}&rdquo;
+          </p>
+        </div>
+
+        {/* Analysis Headline (The Hook) */}
+        {feedback && (
+          <div className="space-y-6">
+            <div>
+              <p className="text-xl font-black text-[#1a1f2e] leading-tight tracking-tight serif-heading mb-4">
+                {feedback.summary}
+              </p>
+              
+              {!isExpanded && (
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(true);
+                  }}
+                  className="w-full py-3 mt-2 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-600 bg-indigo-50/50 hover:bg-indigo-50 rounded-xl transition-colors group"
+                >
+                  View Full Analysis
+                  <svg className="w-3 h-3 transition-transform group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              )}
+            </div>
+
+            {/* Expanded Content */}
+            {isExpanded && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-top-4 duration-500 pt-4 border-t border-stone-50">
+                <div className="grid grid-cols-1 gap-8">
+                  {isTop ? (
+                    <div>
+                      <p className="text-[10px] uppercase font-bold text-emerald-600 mb-4 tracking-[0.3em]">
+                        Success Factors
+                      </p>
+                      <ul className="space-y-3">
+                        {feedback.whatToReplicate.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
+                            <span className="text-base text-stone-600 font-medium leading-relaxed">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>    </Card>
+                  ) : (
+                    <div>
+                      <p className="text-[10px] uppercase font-bold text-rose-600 mb-4 tracking-[0.3em]">
+                        Friction Points
+                      </p>
+                      <ul className="space-y-3">
+                        {feedback.whatToAvoid.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-3">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 flex-shrink-0"></span>
+                            <span className="text-base text-stone-600 font-medium leading-relaxed">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {feedback.likelyCauses && feedback.likelyCauses.length > 0 && (
+                    <div>
+                      <p className="text-[10px] uppercase font-bold text-stone-400 mb-4 tracking-[0.3em]">
+                        Environmental Context
+                      </p>
+                      <ul className="space-y-2">
+                        {feedback.likelyCauses.map((item, idx) => (
+                          <li key={idx} className="text-sm text-stone-400 font-medium italic leading-relaxed pl-4 border-l border-stone-100">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+                
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(false);
+                  }}
+                  className="w-full py-3 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-600 hover:bg-stone-50 rounded-xl transition-all"
+                >
+                  Collapse Analysis
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" />
+                  </svg>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -168,11 +142,13 @@ interface FeedbackSectionProps {
 export function FeedbackSection({ title, description, analyses, type }: FeedbackSectionProps) {
   return (
     <section>
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">{title}</h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">{description}</p>
+      <div className="mb-8">
+        <h2 className="text-2xl font-black text-[#1a1f2e] tracking-tighter serif-heading italic">
+          {title}
+        </h2>
+        <p className="text-[10px] text-stone-400 mt-2 font-bold uppercase tracking-[0.4em]">{description}</p>
       </div>
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 gap-8">
         {analyses.map((analysis) => (
           <FeedbackCard key={analysis.cast.hash} analysis={analysis} type={type} />
         ))}
