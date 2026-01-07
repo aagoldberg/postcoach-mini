@@ -16,13 +16,12 @@ interface UserHeaderProps {
 }
 
 export function UserHeader({ user }: UserHeaderProps) {
-  // MiniAppUser might not have follower counts, use optional chaining or defaults
   const followerCount = user.followerCount ?? 0;
   const followingCount = user.followingCount ?? 0;
 
   return (
-    <Card className="flex flex-col items-center gap-4 p-8 bg-white text-center overflow-visible mt-12">
-      <div className="relative w-24 h-24 -mt-16 rounded-[2rem] overflow-hidden border-[6px] border-white shadow-xl flex-shrink-0 bg-stone-100">
+    <Card className="p-5 bg-white overflow-visible flex items-center gap-4">
+      <div className="relative w-14 h-14 rounded-xl overflow-hidden border-2 border-stone-100 flex-shrink-0 bg-stone-100">
         {user.pfpUrl ? (
           <img
             src={user.pfpUrl}
@@ -30,29 +29,33 @@ export function UserHeader({ user }: UserHeaderProps) {
             className="object-cover w-full h-full"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-3xl font-bold bg-stone-100 text-stone-400">
+          <div className="w-full h-full flex items-center justify-center text-xl font-bold text-stone-400">
             {user.displayName?.[0]?.toUpperCase() || '?'}
           </div>
         )}
       </div>
-      <div className="space-y-1">
-        <h1 className="text-3xl font-black text-[#1a1f2e] tracking-tighter serif-heading">
+      
+      <div className="flex-1 min-w-0">
+        <h1 className="text-lg font-black text-[#1a1f2e] tracking-tight truncate leading-tight">
           {user.displayName}
         </h1>
-        <p className="text-stone-400 font-bold text-xs tracking-widest uppercase">
+        <p className="text-stone-400 font-bold text-[10px] tracking-widest uppercase truncate">
           @{user.username}
         </p>
-        <div className="flex gap-8 mt-6 pt-6 border-t border-stone-50 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
-          <span className="flex flex-col items-center">
-            <strong className="text-lg text-[#1a1f2e] font-black tracking-tighter">
-              {followerCount.toLocaleString()}
-            </strong> followers
+      </div>
+
+      <div className="flex gap-4 text-[9px] font-bold uppercase tracking-wider text-stone-400 flex-shrink-0">
+        <div className="text-center">
+          <span className="block text-sm text-[#1a1f2e] font-black tracking-tight leading-none">
+            {followerCount.toLocaleString()}
           </span>
-          <span className="flex flex-col items-center">
-            <strong className="text-lg text-[#1a1f2e] font-black tracking-tighter">
-              {followingCount.toLocaleString()}
-            </strong> following
+          <span>followers</span>
+        </div>
+        <div className="text-center">
+          <span className="block text-sm text-[#1a1f2e] font-black tracking-tight leading-none">
+            {followingCount.toLocaleString()}
           </span>
+          <span>following</span>
         </div>
       </div>
     </Card>

@@ -47,65 +47,62 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
   }, [user.username]);
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-1000 pb-12">
-      {/* Navigation Bar */}
-      <div className="flex items-center justify-between py-4 border-b border-stone-200/60 mb-8">
-        <Button
-          variant="outline"
-          size="sm"
+    <div className="space-y-6 animate-in fade-in duration-700 pb-12">
+      {/* Navigation Bar Compact */}
+      <div className="flex items-center justify-between py-2 border-b border-stone-100">
+        <button
           onClick={onReset}
+          className="text-[9px] font-bold uppercase tracking-widest text-stone-400 hover:text-stone-600 flex items-center gap-1"
         >
           ← New Analysis
-        </Button>
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.3em]">
+        </button>
+        <div className="flex items-center gap-2">
+          <span className="text-[9px] font-bold text-stone-300 uppercase tracking-widest">
             {result.cached ? 'Cached' : 'Fresh'} • #{user.fid}
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Column (User & Scoreboard) */}
-        <div className="lg:col-span-4 space-y-6">
+      <div className="grid grid-cols-1 gap-6">
+        {/* User & Scoreboard */}
+        <div className="space-y-4">
           <UserHeader user={user} />
           <Scoreboard metrics={userMetrics} topTheme={topTheme} />
         </div>
 
-        {/* Right Column (Weekly Brief & Deep Dives) */}
-        <div className="lg:col-span-8 space-y-12">
-           <WeeklyBrief
-            brief={weeklyBrief}
-            username={user.username}
-            onShareImage={handleShareImage}
-          />
+        {/* Weekly Brief */}
+        <WeeklyBrief
+          brief={weeklyBrief}
+          username={user.username}
+          onShareImage={handleShareImage}
+        />
 
-          {/* Deep Dives */}
-          <div className="space-y-12">
-            <section>
-              {topCasts.length > 0 ? (
-                <FeedbackSection
-                  title="Success Vectors"
-                  description="High-engagement patterns identified in recent activity"
-                  analyses={topCasts}
-                  type="top"
-                />
-              ) : (
-                <EmptyState
-                  title="No Top Posts Yet"
-                  description="We need a bit more history to identify your best performing content. Keep casting!"
-                />
-              )}
-            </section>
-
-            {bottomCasts.length > 0 && (
+        {/* Deep Dives */}
+        <div className="space-y-8 pt-2">
+          <section>
+            {topCasts.length > 0 ? (
               <FeedbackSection
-                title="Friction Points"
-                description="Content that underperformed relative to audience baseline"
-                analyses={bottomCasts}
-                type="bottom"
+                title="Success Vectors"
+                description="High-engagement patterns identified"
+                analyses={topCasts}
+                type="top"
+              />
+            ) : (
+              <EmptyState
+                title="No Top Posts Yet"
+                description="Keep casting to unlock insights!"
               />
             )}
-          </div>
+          </section>
+
+          {bottomCasts.length > 0 && (
+            <FeedbackSection
+              title="Friction Points"
+              description="Content that underperformed baseline"
+              analyses={bottomCasts}
+              type="bottom"
+            />
+          )}
         </div>
       </div>
       
