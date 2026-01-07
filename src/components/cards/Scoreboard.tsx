@@ -31,7 +31,11 @@ function InfoTip({ text }: { text: string }) {
   );
 }
 
+const GENERIC_LABELS = ['All Posts', 'Mixed Topics'];
+
 export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
+  // Filter out generic labels
+  const showTopTheme = topTheme && !GENERIC_LABELS.includes(topTheme.label);
   return (
     <Card className="border-none shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)] bg-white">
       <CardHeader className="py-3 px-5">
@@ -92,7 +96,7 @@ export function Scoreboard({ metrics, topTheme }: ScoreboardProps) {
         </div>
 
         {/* Top Topic Compact */}
-        {topTheme && (
+        {showTopTheme && (
           <div className="mt-4 pt-4 border-t border-stone-100">
             <div className="flex items-center justify-between">
               <span className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">

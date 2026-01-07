@@ -9,10 +9,13 @@ interface FeedbackCardProps {
   type: 'top' | 'bottom';
 }
 
+const GENERIC_LABELS = ['All Posts', 'Mixed Topics'];
+
 export function FeedbackCard({ analysis, type }: FeedbackCardProps) {
   const { cast, metrics, content, feedback, theme } = analysis;
   const [isExpanded, setIsExpanded] = useState(false);
   const isTop = type === 'top';
+  const showTheme = theme && !GENERIC_LABELS.includes(theme);
 
   return (
     <Card 
@@ -26,7 +29,7 @@ export function FeedbackCard({ analysis, type }: FeedbackCardProps) {
             <div className={`w-2 h-2 rounded-full ${isTop ? 'bg-emerald-500 shadow-emerald-200' : 'bg-rose-500 shadow-rose-200'} shadow-sm`} />
             <span className="text-[9px] font-bold text-stone-300 uppercase tracking-widest">{isTop ? 'High Signal' : 'Low Signal'}</span>
           </div>
-          {theme && <Badge variant="default" className="text-[9px] px-2 py-0.5 bg-stone-50 border-stone-100 text-stone-400">{theme}</Badge>}
+          {showTheme && <Badge variant="default" className="text-[9px] px-2 py-0.5 bg-stone-50 border-stone-100 text-stone-400">{theme}</Badge>}
         </div>
 
         {/* Content Preview */}

@@ -1,21 +1,31 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { toPng } from 'html-to-image';
 import type { AnalysisResult } from '@/types';
 import { UserHeader, Scoreboard, FeedbackSection } from '@/components/cards';
 import { WeeklyBrief } from '@/components/brief';
-import { Button, EmptyState, Toast } from '@/components/ui';
-import { useState } from 'react';
+import { EmptyState, Toast } from '@/components/ui';
 
 interface AnalysisResultsProps {
   result: AnalysisResult;
   onReset: () => void;
 }
 
+type Section = 'overview' | 'brief' | 'success' | 'friction';
+
 export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
   const { user, userMetrics, themes, topCasts, bottomCasts, weeklyBrief } = result;
   const [toast, setToast] = useState<string | null>(null);
+  const [activeSection, setActiveSection] = useState<Section>('overview');
+
+  const scrollToSection = useCallback((sectionId: Section) => {
+    setActiveSection(sectionId);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
 
   // Get top theme for scoreboard
   const topTheme = themes.length > 0
@@ -46,66 +56,91 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
     }
   }, [user.username]);
 
+  const navItems: { id: Section; label: string }[] = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'brief', label: 'Brief' },
+    { id: 'success', label: 'Wins' },
+    { id: 'friction', label: 'Improve' },
+  ];
+
   return (
     <div className="space-y-6 animate-in fade-in duration-700 pb-12">
-      {/* Navigation Bar Compact */}
-      <div className="flex items-center justify-between py-2 border-b border-stone-100">
+      {/* Top Bar */}
+      <div className="flex items-center justify-between py-2">
         <button
           onClick={onReset}
           className="text-[9px] font-bold uppercase tracking-widest text-stone-400 hover:text-stone-600 flex items-center gap-1"
         >
           ← New Analysis
         </button>
-        <div className="flex items-center gap-2">
-          <span className="text-[9px] font-bold text-stone-300 uppercase tracking-widest">
-            {result.cached ? 'Cached' : 'Fresh'} • #{user.fid}
-          </span>
-        </div>
+        <span className="text-[9px] font-bold text-stone-300 uppercase tracking-widest">
+          {result.cached ? 'Cached' : 'Fresh'} • #{user.fid}
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 gap-6">
-        {/* User & Scoreboard */}
-        <div className="space-y-4">
-          <UserHeader user={user} />
-          <Scoreboard metrics={userMetrics} topTheme={topTheme} />
+      {/* Sticky Navigation */}
+      <nav className="sticky top-0 z-20 -mx-4 px-4 py-3 bg-[#f2f5f3]/95 backdrop-blur border-b border-stone-200/50">
+        <div className="flex gap-1 overflow-x-auto no-scrollbar">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={`px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest rounded-full whitespace-nowrap transition-all ${
+                activeSection === item.id
+                  ? 'bg-[#1a1f2e] text-white'
+                  : 'text-stone-400 hover:text-stone-600 hover:bg-stone-100'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
+      </nav>
 
-        {/* Weekly Brief */}
+      {/* Overview Section */}
+      <section id="overview" className="scroll-mt-20 space-y-4">
+        <UserHeader user={user} />
+        <Scoreboard metrics={userMetrics} topTheme={topTheme} />
+      </section>
+
+      {/* Brief Section */}
+      <section id="brief" className="scroll-mt-20">
         <WeeklyBrief
           brief={weeklyBrief}
           username={user.username}
           onShareImage={handleShareImage}
         />
+      </section>
 
-        {/* Deep Dives */}
-        <div className="space-y-8 pt-2">
-          <section>
-            {topCasts.length > 0 ? (
-              <FeedbackSection
-                title="Success Vectors"
-                description="High-engagement patterns identified"
-                analyses={topCasts}
-                type="top"
-              />
-            ) : (
-              <EmptyState
-                title="No Top Posts Yet"
-                description="Keep casting to unlock insights!"
-              />
-            )}
-          </section>
+      {/* Success Section */}
+      <section id="success" className="scroll-mt-20">
+        {topCasts.length > 0 ? (
+          <FeedbackSection
+            title="Success Vectors"
+            description="High-engagement patterns identified"
+            analyses={topCasts}
+            type="top"
+          />
+        ) : (
+          <EmptyState
+            title="No Top Posts Yet"
+            description="Keep casting to unlock insights!"
+          />
+        )}
+      </section>
 
-          {bottomCasts.length > 0 && (
-            <FeedbackSection
-              title="Friction Points"
-              description="Content that underperformed baseline"
-              analyses={bottomCasts}
-              type="bottom"
-            />
-          )}
-        </div>
-      </div>
-      
+      {/* Friction Section */}
+      {bottomCasts.length > 0 && (
+        <section id="friction" className="scroll-mt-20">
+          <FeedbackSection
+            title="Friction Points"
+            description="Content that underperformed baseline"
+            analyses={bottomCasts}
+            type="bottom"
+          />
+        </section>
+      )}
+
       {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );
