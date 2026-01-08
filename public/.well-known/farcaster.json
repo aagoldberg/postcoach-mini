@@ -6,12 +6,12 @@
   },
   "miniapp": {
     "version": "1",
-    "name": "Tune",
+    "name": "PostCoach",
     "iconUrl": "https://postcoach-mini.vercel.app/icon.png",
     "splashImageUrl": "https://postcoach-mini.vercel.app/splash.png",
     "homeUrl": "https://postcoach-mini.vercel.app",
     "splashBackgroundColor": "#ffffff",
-    "subtitle": "AI feedback on your Farcaster posts",
+    "subtitle": "Post better. Faster.",
     "description": "Get AI-powered feedback on your casts. See what's working, what's not, and get a personalized weekly brief.",
     "primaryCategory": "social",
     "tags": ["analytics", "ai", "growth", "coaching"]

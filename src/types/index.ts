@@ -1,4 +1,4 @@
-// Core Types for Tune - Farcaster Influence Coach
+// Core Types for PostCoach - AI Feedback on Your Casts
 
 // ============= Farcaster Data Types =============
 

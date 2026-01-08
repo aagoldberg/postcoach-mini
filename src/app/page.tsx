@@ -115,22 +115,25 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center max-w-md">
-          <div className="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-[#1a1f2e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-            </svg>
+          <div className="w-20 h-20 rounded-[2rem] bg-white shadow-xl flex items-center justify-center mx-auto mb-8 border border-stone-100 overflow-hidden">
+             <img 
+               src="/logos/farcaster/farcaster.png" 
+               alt="Farcaster" 
+               className="w-12 h-12"
+             />
           </div>
-          <h1 className="text-2xl font-black text-[#1a1f2e] mb-4 tracking-tight serif-heading italic">
-            Tune
+          <h1 className="text-3xl font-black text-[#1a1f2e] mb-4 tracking-tighter serif-heading italic">
+            PostCoach
           </h1>
-          <p className="text-stone-500 mb-6 font-medium">
-            Open this app in a Farcaster client to get AI-powered feedback on your posts.
+          <p className="text-stone-500 mb-8 font-medium leading-relaxed">
+            AI-powered coaching for Farcaster creators.
           </p>
           <a
             href="https://farcaster.xyz"
-            className="inline-flex items-center justify-center px-6 py-3 bg-[#1a1f2e] text-white font-bold uppercase tracking-widest text-xs rounded-lg hover:bg-[#2d364d] transition-colors shadow-lg shadow-indigo-500/20"
+            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#1a1f2e] text-white font-bold uppercase tracking-widest text-[11px] rounded-2xl hover:bg-[#2d364d] transition-all shadow-xl shadow-indigo-500/10 active:scale-[0.98]"
           >
-            Get Farcaster
+            <img src="/logos/farcaster/farcaster.png" className="w-4 h-4 invert" alt="" />
+            Sign in with Farcaster
           </a>
         </div>
       </div>
@@ -150,11 +153,13 @@ export default function Home() {
   if (state === 'analyzing') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="mb-8">
-          <div className="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center animate-pulse">
-            <svg className="w-8 h-8 text-[#1a1f2e]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
+        <div className="mb-10">
+          <div className="w-20 h-20 rounded-[2rem] bg-white shadow-xl flex items-center justify-center animate-pulse border border-stone-100 overflow-hidden">
+             <img 
+               src="/logos/farcaster/farcaster.png" 
+               alt="Farcaster" 
+               className="w-12 h-12"
+             />
           </div>
         </div>
         <h2 className="text-xl font-black text-[#1a1f2e] mb-2 serif-heading italic">

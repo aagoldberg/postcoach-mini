@@ -16,7 +16,7 @@ export function WeeklyBrief({ brief, username, onShareImage }: WeeklyBriefProps)
   const [activeTab, setActiveTab] = useState<'win' | 'weakness' | 'experiment'>('experiment');
 
   const copyToClipboard = useCallback(() => {
-    const text = `My Tune Brief: ${brief.experiment.title}\n\nTry: \"${brief.experiment.templateCast}\"`;
+    const text = `My PostCoach Brief: ${brief.experiment.title}\n\nTry: \"${brief.experiment.templateCast}\"`;
     navigator.clipboard.writeText(text).then(() => setToast('Brief copied!'));
   }, [brief]);
 

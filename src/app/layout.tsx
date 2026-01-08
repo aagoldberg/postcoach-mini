@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tune - Farcaster Coach",
+  title: "PostCoach - AI Feedback on Your Casts",
   description: "AI-powered feedback on your Farcaster posts",
 };
 
