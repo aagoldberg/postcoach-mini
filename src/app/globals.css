@@ -27,6 +27,44 @@ body {
   @apply antialiased selection:bg-stone-200;
 }
 
+/* =========================================
+   DEFAULT THEME (SAGE) - BASE STYLES
+   ========================================= */
+
+/* Typography Defaults - Explicitly Dark & Normal Case */
+h1, h2, h3, h4, h5, h6 {
+  color: #1a1f2e !important;
+  text-transform: none !important;
+  letter-spacing: -0.02em !important;
+  font-weight: 700 !important;
+}
+
+.serif-heading {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-style: italic;
+  font-weight: 900;
+  color: #1a1f2e !important;
+}
+
+p, li, span, div, strong, b {
+  color: #44403c; /* Stone-700 */
+}
+
+/* Force dark text on specific large headers */
+.text-\[\#1a1f2e\] {
+  color: #1a1f2e !important;
+}
+
+/* Fix specific UI elements colors */
+.text-stone-400 { color: #a8a29e !important; }
+.text-stone-500 { color: #78716c !important; }
+.bg-white { background-color: #ffffff !important; }
+
+/* Exempt semantic utility colors */
+.text-emerald-600 { color: #059669 !important; }
+.text-rose-600 { color: #e11d48 !important; }
+.text-indigo-600 { color: #4f46e5 !important; }
+
 @layer utilities {
   .premium-card {
     @apply bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.06)] transition-all duration-700 rounded-[2.5rem];
@@ -36,9 +74,17 @@ body {
     @apply font-serif italic tracking-tight;
   }
 
-  .ink-border {
-    @apply border-stone-100;
-  }
+  /* Semantic Theme Utilities - Default (Sage) */
+  .bg-success-subtle { @apply bg-emerald-50; }
+  .text-success-bold { @apply text-emerald-600; }
+  
+  .bg-error-subtle { @apply bg-rose-50; }
+  .text-error-bold { @apply text-rose-600; }
+  
+  .bg-info-subtle { @apply bg-indigo-50; }
+  .text-info-bold { @apply text-indigo-600; }
+  
+  .bg-surface-subtle { @apply bg-stone-50; }
 }
 
 /* Hide scrollbar but keep functionality */

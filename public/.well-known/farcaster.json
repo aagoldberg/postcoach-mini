@@ -13,6 +13,7 @@
     "splashBackgroundColor": "#ffffff",
     "subtitle": "Post better. Faster.",
     "description": "See what works. Adjust. Compound.",
+    "imageUrl": "https://postcoach-mini.vercel.app/og-image-v2.png",
     "primaryCategory": "social",
     "tags": ["analytics", "ai", "growth", "coaching"]
   }
